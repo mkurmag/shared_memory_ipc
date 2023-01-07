@@ -282,6 +282,9 @@ int main(int argc, char** argv) {
                 std::cout << process_index << ": read info from " << consumer.producer_process_index
                           << ": " << msg->val << "\n";
                 consumer.UnlockMessage();
+            } else {
+                std::cout << process_index << ": read info from " << consumer.producer_process_index
+                          << ": empty\n";
             }
         }
 

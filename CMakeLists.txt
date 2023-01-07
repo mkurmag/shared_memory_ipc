@@ -13,6 +13,14 @@ add_compile_definitions(PROCESSES_COUNT=${PROC_COUNT})
 # add_link_options(-fsanitize=address,undefined)
 
 project(Proc)
-
 add_executable(Proc src/main.cpp)
+include_directories(include)
+
+if(TESTS)
+    find_package(Catch2 3 REQUIRED)
+    add_executable(tests tests/shared_data_container_tests.cpp)
+    target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
+    add_custom_target(test ALL COMMAND tests)
+endif()
+
 unset(PROC_COUNT CACHE)

@@ -7,10 +7,14 @@ if [[ -z "$COUNT" ]]; then
     exit 1
 fi
 
+function cleanup() {
+    rm -f /dev/shm/shared_memory*
+}
+
 cmake -S . -B build -DPROC_COUNT=$COUNT
 cmake --build build
 
-rm -f /dev/shm/shared_memory*
+cleanup
 
 # pids of processes
 pids=()
@@ -22,7 +26,7 @@ done
 # echo ${pids[@]}
 
 trap 'exit' SIGINT SIGTERM
-trap 'kill 0' EXIT
+trap 'cleanup; kill 0' EXIT
 
 while :
 do

@@ -15,9 +15,7 @@
 namespace bipc = boost::interprocess;
 
 namespace Configuration {
-const unsigned cache_line_size = 64;
-const unsigned max_message_size = 16;
-const unsigned number_of_processes = 3;
+const unsigned number_of_processes = PROCESSES_COUNT;
 static_assert(number_of_processes <= 31, "supported up to 31 processes");
 const std::string shared_obj_name_prefix = "shared_memory";
 }  // namespace Configuration

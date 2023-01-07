@@ -7,7 +7,7 @@ if [[ -z "$COUNT" ]]; then
     exit 1
 fi
 
-cmake -S . -B build
+cmake -S . -B build -DPROC_COUNT=$COUNT
 cmake --build build
 
 rm -f /dev/shm/shared_memory*

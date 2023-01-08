@@ -5,7 +5,7 @@ Example of inter-process communication of multiple processes through shared memo
 
 Processes are mostly independent and communicate from time to time.
 Communication is asynchronous.
-At random time intervals process updates message for other processes and reads their messages.
+At random time intervals process updates the message for other processes and reads their messages.
 
 Processes could be killed and must be able to recover after that.
 
@@ -16,20 +16,20 @@ Each shared memory object has a data structure with single producer and multiple
 
 Shared memory is used because it allows to reread same data after process was killed and recovered.
 
-When producer writes new message, the old message is deleted if there is no consumer
-reading the old message.
+When the producer writes a new message, the old message is deleted if no consumer is reading the old message.
 
 While reading, consumers lock the message to prevent it from being deleted.
-When consumer tries to lock the message the most recent message is locked.
-Producer constantly updates the pointer to the most recent message.
+When the consumer tries to lock the message the most recent message is locked.
+The producer constantly updates the pointer to the most recent message.
 
 Single consumer can lock only one message at the same time.
 Single message can be locked by several consumers.
 
-Even when current message is not locked by any consumer, the producer is still required to
-write message to some empty slot, to prevent partially written state if producer
-is killed during write.
-After write is complete producer atomically moves the pointer to the most recent message.
+Even if the current message is not locked by any consumer,
+the producer is still obliged not to overwrite the current message with a new one,
+to prevent inconsistency if the producer is killed while writing.
+Therefore, the producer writes a new message to an empty slot, and only after the write is complete,
+the producer atomically updates the pointer to the most recent message.
 
 Since in the worst case all consumers can lock different messages,
 then N+1 slots are required for producer to always be able to write new messages.
@@ -56,7 +56,7 @@ This command start 3 processes with indices 0,1,2:
 ```
 ./run.sh 3
 ```
-Each process prints value it is going to write and values it read from other process.
+Each process prints value it is going to write and values it read from other process. The number at the beging of the line indicates the process index.
 
 ```
 0: read info from 1: empty

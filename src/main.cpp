@@ -161,13 +161,3 @@ int main(int argc, char** argv) {
     }
     return 0;
 }
-
-// Add version number, check shared_data size
-// Shared memory is not removed. We need another synchronisation point for that
-// check if too process called with same index;
-//
-// new assumptions:
-//  - number of process statically configurable and <= 31.
-//
-// TODO:
-// * unit tests?
